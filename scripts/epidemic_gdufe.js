@@ -45,9 +45,8 @@ const host = `https://student.wozaixiaoyuan.com/`
 const inSchool = $.getdata("gdufe_inSchool")
 const username = $.getdata("gdufe_username")
 const pwd = $.getdata("gdufe_pwd")
-const illustrate = `微信 => 小程序 => 我在校园 => 登录 => (点击健康打卡或日检日报填报)`
 const nowHours = new Date().getHours()
-typeof $request !== 'undefined' ? set() : doit()
+typeof $request !== 'undefined' ? set() : run()
 
 function set() {
   const Method = $request.method
@@ -71,10 +70,10 @@ function set() {
             }
           }
         }
-        $.msg($.name, `✅写入打卡数据成功🎉`, writein)
+        $.msg($.name, `✅写入打卡数据成功`, writein)
       }
     } else {
-      $.msg($.name, ``, `⭕无法读取请求头❗`)
+      $.msg($.name, ``, `⭕无法读取请求头`)
     }
   }
   $.done()
@@ -103,9 +102,16 @@ function jwtask() {
     $.post(options, (err, resp ,data) => {
       try {
         if (data) {
-          $.list = JSON.parse(data).data[period().i]
+          $.valid = JSON.parse(data).code
+          if ($.valid != -10) {
+            $.log(`✅获取任务列表成功`)
+            $.list = JSON.parse(data).data[period().i]
+          } else {
+            $.log(`❌当前JWSESSION已过期`)
+            $.list = -10
+          }
         } else if (err) {
-          $.log(`❌获取日检日报时发生错误！`)
+          $.log(`❌获取日检日报情况时发生错误！`)
           $.log(JSON.stringify(err))
         }
       } catch (e) {
@@ -130,13 +136,13 @@ function jwsession() {
       try {
         if (data) {
           if (JSON.parse(data).code == 0) {
-            $.log(`✅成功获取${JSON.parse(data).sessionUser.name}的个人数据`)
-            $.setdata(JSON.stringify(resp.headers.JWSESSION).replace(/"/g, ""), "gdufe_JWSESSION")
-            $.log(`✅成功设置我在校园JWSESSION`)
+            $.newJWSESSION = JSON.stringify(resp.headers.JWSESSION).replace(/"/g, "")
+            $.setdata($.newJWSESSION, "gdufe_JWSESSION")
+            $.log(`✅成功设置${JSON.parse(data).sessionUser.name}的JWSESSION`)
           } else {
-            $.setdata("error", "gdufe_JWSESSION")
+            $.newJWSESSION = -10
             $.log(`❌登录失败！建议改密码后再尝试！`)
-            $.msg($.name, `❌登录失败！建议改密码后再尝试！`, `http://boxjs.net`)
+            $.msg($.name, `❌登录失败！建议改密码后再尝试！`, ``, `http://boxjs.net`)
           }
         } else {
           $.log(`❌登录时API请求失败！！`)
@@ -151,7 +157,7 @@ function jwsession() {
   })
 }
 
-function sign() {
+function jwsign() {
   const answers = `answers=["0"]&`
   const userId = `userId=&`
   const myArea = `myArea=&`
@@ -182,7 +188,7 @@ function sign() {
       headers: {"JWSESSION": $.getdata("gdufe_JWSESSION")},
       body: encodeURI(body)
     }
-    $.log(`🧑‍💻完成组装，开始打卡……`)
+    $.log(`🧑‍💻信息完成组装，开始${period().t}打卡……`)
     $.post(options, (err, resp, data) => {
       try {
         if (data) {
@@ -210,25 +216,33 @@ function sign() {
   })
 }
 
-async function doit() {
+async function run() {
   if (period().i == -1) {
     $.log(`❌不在打卡时间内！`)
     $.msg($.name, `❌打卡失败`, `${period().t}规定的时间范围内！`)
   } else {
-    if (username && pwd) {
-      await jwsession()
-      if ($.getdata("gdufe_JWSESSION") != "error") {
-        await jwtask()
-        if ($.list.state == 1 && $.list.type == 0) {
-          await sign()
-        } else {
-          $.log(`✅${period().t}已经打卡了！`)
-          $.msg($.name, `✅${period().t}已经打卡`, ``)
-        }
+    if ($.getdata("gdufe_JWSESSION")) {
+      await jwtask()
+      if ($.list == -10) {
+        delete $.list
+        await jwsession()
+        if ($.newJWSESSION != -10) {await jwtask()}
       }
+    } else if (username && pwd) {
+      await jwsession()
+      if ($.newJWSESSION != -10) {await jwtask()}
     } else {
       $.log(`❌赞无我在校园JWSESSION，也暂未设置登陆账号和密码，进入boxjs设置`)
       $.msg($.name, `❌暂未设置登陆账号和密码❗`, `前点击通知栏前往boxjs设置❗`, `http://boxjs.net`)
+    }
+    if ($.list != -10) {
+      if ($.list.state == 1 && $.list.type == 0) {
+        $.log(`⭕${period().t}没有打卡`)
+        await jwsign()
+      } else {
+        $.log(`✅${period().t}已经打卡了！`)
+        $.msg($.name, `✅${period().t}已经打卡`, ``)
+      }
     }
   }
   $.done()

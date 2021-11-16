@@ -404,6 +404,13 @@
               "desc": "登录我在校园的密码,填写是为了获取JWSESSION"
             },
             {
+              "id": "gdufe_JWSESSION",
+              "name": "JWSESSION",
+              "val": "",
+              "type": "text",
+              "desc": "我在校园的JWSESSION,用于日检日报信息填报"
+            },
+            {
               "id": "gdufe_inSchool",
               "name": "是否在校",
               "val": true,
