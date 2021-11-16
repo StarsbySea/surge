@@ -102,8 +102,7 @@ function jwtask() {
     $.post(options, (err, resp ,data) => {
       try {
         if (data) {
-          $.valid = JSON.parse(data).code
-          if ($.valid != -10) {
+          if (JSON.parse(data).code != -10) {
             $.log(`✅获取任务列表成功`)
             $.list = JSON.parse(data).data[period().i]
           } else {
@@ -111,7 +110,7 @@ function jwtask() {
             $.list = -10
           }
         } else if (err) {
-          $.log(`❌获取日检日报情况时发生错误！`)
+          $.log(`❌获取日检日报时发生错误！`)
           $.log(JSON.stringify(err))
         }
       } catch (e) {
@@ -136,13 +135,12 @@ function jwsession() {
       try {
         if (data) {
           if (JSON.parse(data).code == 0) {
-            $.newJWSESSION = JSON.stringify(resp.headers.JWSESSION).replace(/"/g, "")
-            $.setdata($.newJWSESSION, "gdufe_JWSESSION")
+            $.list = JSON.stringify(resp.headers.JWSESSION).replace(/"/g, "")
+            $.setdata($.list, "gdufe_JWSESSION")
             $.log(`✅成功设置${JSON.parse(data).sessionUser.name}的JWSESSION`)
           } else {
-            $.newJWSESSION = -10
+            $.list = -10
             $.log(`❌登录失败！建议改密码后再尝试！`)
-            $.msg($.name, `❌登录失败！建议改密码后再尝试！`, ``, `http://boxjs.net`)
           }
         } else {
           $.log(`❌登录时API请求失败！！`)
@@ -157,7 +155,7 @@ function jwsession() {
   })
 }
 
-function jwsign() {
+function jwdosign() {
   const answers = `answers=["0"]&`
   const userId = `userId=&`
   const myArea = `myArea=&`
@@ -193,15 +191,6 @@ function jwsign() {
       try {
         if (data) {
           $.checkin = JSON.parse(data)
-          if ($.checkin.code == 0) {
-            $.log(`✅${period().t}打卡成功`)
-            $.log(`✅返回数据包：${JSON.stringify(data)}`)
-            $.msg($.name, `✅${period().t}打卡成功`, ``)
-          } else {
-            $.log(`❌${period().t}打卡失败`)
-            $.log(`❌返回数据包：${JSON.stringify(data)}`)
-            $.msg($.name, `❌${period().t}打卡失败`, ``)
-          }
         } else if (err) {
           $.log(`❌签到时API请求失败！`)
           $.log(JSON.stringify(err))
@@ -216,6 +205,31 @@ function jwsign() {
   })
 }
 
+async function jwsign() {
+  if ($.list != -10) {
+    delete $.list
+    await jwtask()
+  }
+  if ($.list != -10) {
+    if ($.list.state == 1 && $.list.type == 0) {
+      $.log(`⭕${period().t}没有打卡`)
+      await jwdosign()
+      if ($.checkin.code == 0) {
+        $.log(`✅${period().t}打卡成功`)
+        $.log(`✅返回数据包：${JSON.stringify(data)}`)
+        $.msg($.name, `✅${period().t}打卡成功`, ``)
+      } else {
+        $.log(`❌${period().t}打卡失败`)
+        $.log(`❌返回数据包：${JSON.stringify(data)}`)
+        $.msg($.name, `❌${period().t}打卡失败`, ``)
+      }
+    } else {
+      $.log(`✅${period().t}已经打卡了！`)
+      $.msg($.name, `✅${period().t}已经打卡`, ``)
+    }
+  }
+}
+
 async function run() {
   if (period().i == -1) {
     $.log(`❌不在打卡时间内！`)
@@ -226,23 +240,14 @@ async function run() {
       if ($.list == -10) {
         delete $.list
         await jwsession()
-        if ($.newJWSESSION != -10) {await jwtask()}
       }
+      await jwsign()
     } else if (username && pwd) {
       await jwsession()
-      if ($.newJWSESSION != -10) {await jwtask()}
+      await jwsign()
     } else {
       $.log(`❌赞无我在校园JWSESSION，也暂未设置登陆账号和密码，进入boxjs设置`)
       $.msg($.name, `❌暂未设置登陆账号和密码❗`, `前点击通知栏前往boxjs设置❗`, `http://boxjs.net`)
-    }
-    if ($.list != -10) {
-      if ($.list.state == 1 && $.list.type == 0) {
-        $.log(`⭕${period().t}没有打卡`)
-        await jwsign()
-      } else {
-        $.log(`✅${period().t}已经打卡了！`)
-        $.msg($.name, `✅${period().t}已经打卡`, ``)
-      }
     }
   }
   $.done()
