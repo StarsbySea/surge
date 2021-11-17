@@ -390,13 +390,6 @@
           ],
           "settings": [
             {
-              "id": "bddt_ak",
-              "name": "百度地图ak",
-              "val": "",
-              "type": "text",
-              "desc": "百度地图API获取经纬度,签到定位所需的ak"
-            },
-            {
               "id": "gdufe_username",
               "name": "登录用户名",
               "val": "",
