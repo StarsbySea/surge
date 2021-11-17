@@ -42,7 +42,6 @@ boxjs: https://raw.githubusercontent.com/chiupam/surge/main/boxjs/chiupam.boxjs.
 
 const $ = new Env('广东财经大学')
 const host = `https://student.wozaixiaoyuan.com/`
-const bddt_ak = $.getdata("bddt_ak")
 const inSchool = $.getdata("gdufe_inSchool")
 const username = $.getdata("gdufe_username")
 const pwd = $.getdata("gdufe_pwd")
@@ -161,7 +160,7 @@ function geocoding() {
   $.log(`${inSchool == "true" ? "🏫" : "🏠"}${address}`)
   return new Promise(resolve => {
     const options = {
-      url: `https://api.map.baidu.com/geocoding/v3/?address=${encodeURI(address)}&output=json&ak=${bddt_ak}`
+      url: `https://api.map.baidu.com/geocoding/v3/?address=${encodeURI(address)}&output=json&ak=2ZrHEZzf1z4gbNGZ96GmIaWYoWGGDMZC`
     }
     $.log(`🧑‍💻正在通过地址转换出经纬度`)
     $.get(options, (err, resp, data) => {
@@ -192,7 +191,7 @@ function reverse_geocoding() {
   $.log(`🧑‍💻正在通过经纬度转换出地址信息`)
   return new Promise(resolve => {
     const options = {
-      url: `https://api.map.baidu.com/reverse_geocoding/v3/?ak=${bddt_ak}&output=json&location=${$.latitude ? $.latitude : inSchool == "true" ? "23.212478651049256" : $.getdata("gdufe_latitude")},${$.longitude ? $.longitude : inSchool == "true" ? "112.86226153904119" : $.getdata("gdufe_longitude")}&extensions_town=true`
+      url: `https://api.map.baidu.com/reverse_geocoding/v3/?ak=2ZrHEZzf1z4gbNGZ96GmIaWYoWGGDMZC&output=json&location=${$.latitude ? $.latitude : inSchool == "true" ? "23.212478651049256" : $.getdata("gdufe_latitude")},${$.longitude ? $.longitude : inSchool == "true" ? "112.86226153904119" : $.getdata("gdufe_longitude")}&extensions_town=true`
     }
     $.get(options, (err, resp, data) => {
       try {
