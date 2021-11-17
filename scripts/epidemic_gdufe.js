@@ -290,7 +290,7 @@ async function jwsign() {
       if ($.checkin.code == 0) {
         $.log(`✅${period().t}打卡成功`)
         $.log(`✅返回数据包：${JSON.stringify($.checkin)}`)
-        $.msg($.name, `✅${period().t}打卡成功`, ``)
+        // $.msg($.name, `✅${period().t}打卡成功`, ``)
       } else {
         $.log(`❌${period().t}打卡失败`)
         $.log(`❌返回数据包：${JSON.stringify($.checkin)}`)
