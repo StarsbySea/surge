@@ -390,6 +390,13 @@
           ],
           "settings": [
             {
+              "id": "bddt_ak",
+              "name": "百度地图ak",
+              "val": "",
+              "type": "text",
+              "desc": "百度地图API获取经纬度,签到定位所需的ak"
+            },
+            {
               "id": "gdufe_username",
               "name": "登录用户名",
               "val": "",
@@ -418,68 +425,11 @@
               "desc": "开启则表示您目前定位在学校,以下信息都不起效,默认开启"
             },
             {
-              "id": "gdufe_province",
-              "name": "所在省份",
+              "id": "gdufe_address",
+              "name": "家庭住址",
               "val": "",
               "type": "text",
-              "placeholder": "(点击以展开说明)",
-              "desc": "您目前所在的省份,如广东省"
-            },
-            {
-              "id": "gdufe_city",
-              "name": "所在城市",
-              "val": "",
-              "type": "text",
-              "placeholder": "(点击以展开说明)",
-              "desc": "您目前所在的城市,如佛山市"
-            },
-            {
-              "id": "gdufe_district",
-              "name": "所在行政区",
-              "val": "",
-              "type": "text",
-              "placeholder": "(点击以展开说明)",
-              "desc": "您目前所在的行政区,如三水区"
-            },
-            {
-              "id": "gdufe_township",
-              "name": "所在街道",
-              "val": "",
-              "type": "text",
-              "placeholder": "(点击以展开说明)",
-              "desc": "您目前所在的街道,如云东海街道"
-            },
-            {
-              "id": "gdufe_street",
-              "name": "所在路段",
-              "val": "",
-              "type": "text",
-              "placeholder": "(点击以展开说明)",
-              "desc": "您目前所在的路段,如大学路"
-            },
-            {
-              "id": "gdufe_areacode",
-              "name": "所在地区的邮政编码",
-              "val": "",
-              "type": "number",
-              "placeholder": "(点击以展开说明)",
-              "desc": "您目前所在的地区的邮政编码,如440607"
-            },
-            {
-              "id": "gdufe_latitude",
-              "name": "目前定位所在地的纬度(精确到小数点后15位)",
-              "val": "",
-              "type": "text",
-              "placeholder": "(点击以展开说明)",
-              "desc": "您目前定位所在地的纬度，如23.208688735961914"
-            },
-            {
-              "id": "gdufe_longitude",
-              "name": "目前定位所在地的经度(精确到小数点后15位)",
-              "val": "",
-              "type": "text",
-              "placeholder": "(点击以展开说明)",
-              "desc": "您目前定位所在地的经度，如112.85215759277344"
+              "desc": "填写您的家庭地址,用于寒暑假签到"
             }
           ],
           "author": "@chiupam",

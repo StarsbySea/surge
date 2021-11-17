@@ -42,6 +42,7 @@ boxjs: https://raw.githubusercontent.com/chiupam/surge/main/boxjs/chiupam.boxjs.
 
 const $ = new Env('广东财经大学')
 const host = `https://student.wozaixiaoyuan.com/`
+const bddt_ak = $.getdata("bddt_ak")
 const inSchool = $.getdata("gdufe_inSchool")
 const username = $.getdata("gdufe_username")
 const pwd = $.getdata("gdufe_pwd")
@@ -55,11 +56,11 @@ function set() {
     if ($request.headers) {
       if ($request.headers.JWSESSION != JWSESSION || !JWSESSION) {
         $.setdata($request.headers.JWSESSION, "gdufe_JWSESSION")
-        $.msg(appName, "【成功】写入 JWSESSION 成功！🎉", $request.headers.JWSESSION)
+        $.msg($.name, "✅写入 JWSESSION 成功", $request.headers.JWSESSION)
       } else if ($request.url.indexOf("save") != -1) {
         const body = $response.body.split("&")
-        const arr = ["province", "city", "district", "township", "street", "areacode", "latitude", "longitude"]
-        const arr_cn = ["所在省份", "所在城市", "所在行政区", "所在街道", "所在道路", "所在地邮政编码", "纬度", "经度"]
+        const arr = ["latitude", "longitude"]
+        const arr_cn = ["纬度", "经度"]
         var writein = ""
         for (var m = 0; m < body.length; m++) {
           for (var n = 0; n < arr.length; n++) {
@@ -110,11 +111,11 @@ function jwtask() {
             $.list = -10
           }
         } else if (err) {
-          $.log(`❌获取日检日报时发生错误！`)
+          $.log(`❌获取日检日报时发生错误`)
           $.log(JSON.stringify(err))
         }
       } catch (e) {
-        $.log(`❌访问日检日报API时发生错误！`)
+        $.log(`❌访问日检日报API时发生错误`)
         $.logErr(e, resp)
       } finally {
         resolve()
@@ -143,10 +144,86 @@ function jwsession() {
             $.log(`❌登录失败！建议改密码后再尝试！`)
           }
         } else {
-          $.log(`❌登录时API请求失败！！`)
+          $.log(`❌登录时API请求失败！`)
           $.log(JSON.stringify(err))
         }
       } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve()
+      }
+    })
+  })
+}
+
+function geocoding() {
+  inSchool == "true" ? address = `广东省佛山市三水区广东财经大学` : address = $.getdata("gdufe_address")
+  $.log(`${inSchool == "true" ? "🏫" : "🏠"}${address}`)
+  return new Promise(resolve => {
+    const options = {
+      url: `https://api.map.baidu.com/geocoding/v3/?address=${encodeURI(address)}&output=json&ak=${bddt_ak}`
+    }
+    $.log(`🧑‍💻正在通过地址转换出经纬度……`)
+    $.get(options, (err, resp, data) => {
+      try {
+        if (data) {
+          $.location = JSON.parse(data).result.location
+          $.latitude = $.location.lat
+          $.log(`✅所在纬度 --> ${$.latitude}`)
+          $.longitude = $.location.lng
+          $.log(`✅所在经度 --> ${$.longitude}`)
+        } else if (err) {
+          $.log(`❌获取地址时API请求失败`)
+          $.log(`⭕将使用默认地址`)
+          $.log(JSON.stringify(err))
+        }
+      } catch (e) {
+        $.log(`❌获取地址时发生错误`)
+        $.log(`⭕将使用默认地址`)
+        $.logErr(e, resp)
+      } finally {
+        resolve()
+      }
+    })
+  })
+}
+
+function reverse_geocoding() {
+  $.log(`🧑‍💻正在通过经纬度转换出地址……`)
+  return new Promise(resolve => {
+    const options = {
+      url: `https://api.map.baidu.com/reverse_geocoding/v3/?ak=${bddt_ak}&output=json&location=${$.latitude ? $.latitude : inSchool == "true" ? "23.212478651049256" : $.getdata("gdufe_latitude")},${$.longitude ? $.longitude : inSchool == "true" ? "112.86226153904119" : $.getdata("gdufe_longitude")}&extensions_town=true`
+    }
+    $.get(options, (err, resp, data) => {
+      try {
+        if (data) {
+          $.location = JSON.parse(data).result.addressComponent
+          $.province = $.location.province
+          $.log(`✅所在省份 --> ${$.province}`)
+          if ($.getdata("gdufe_province") != $.province) {$.setdata($.province, "gdufe_province")}
+          $.city = $.location.city
+          $.log(`✅所在城市 --> ${$.city}`)
+          if ($.getdata("gdufe_city") != $.city) {$.setdata($.city, "gdufe_city")}
+          $.district = $.location.district
+          $.log(`✅所在政区 --> ${$.district}`)
+          if ($.getdata("gdufe_district") != $.district) {$.setdata($.district, "gdufe_district")}
+          $.township = $.location.town
+          $.log(`✅所在街道 --> ${$.township}`)
+          if ($.getdata("gdufe_township") != $.township) {$.setdata($.township, "gdufe_township")}
+          $.street = $.location.street
+          $.log(`✅所在道路 --> ${$.street}`)
+          if ($.getdata("gdufe_street") != $.street) {$.setdata($.street, "gdufe_street")}
+          $.areacode = $.location.adcode
+          $.log(`✅行政编码 --> ${$.areacode}`)
+          if ($.getdata("gdufe_areacode") != $.areacode) {$.setdata($.areacode, "gdufe_areacode")}
+        } else if (err) {
+          $.log(`❌获取地址时API请求失败`)
+          $.log(`⭕将使用默认地址`)
+          $.log(JSON.stringify(err))
+        }
+      } catch (e) {
+        $.log(`❌获取地址时发生错误`)
+        $.log(`⭕将使用默认地址`)
         $.logErr(e, resp)
       } finally {
         resolve()
@@ -162,24 +239,18 @@ function jwdosign() {
   const temperature = `temperature=36.0&`
   const seq = `seq=${$.list.seq}&`
   const country = `country=中国&` // 国家
-  const province = `province=${inSchool == "true" ? "广东省" : $.getdata("gdufe_province")}&` // 省份
-  const city = `city=${inSchool == "true" ? "佛山市" : $.getdata("gdufe_city")}&` // 城市
-  const district = `district=${inSchool == "true" ? "三水区" : $.getdata("gdufe_district")}&` // 行政区
-  const township = `township=${inSchool == "true" ? "云东海街道" : $.getdata("gdufe_township")}&` // 街道
-  const street = `street=${inSchool == "true" ? "大学路" : $.getdata("gdufe_street")}&` // 路段
-  const areacode = `areacode=${inSchool == "true" ? "440607" : $.getdata("gdufe_areacode")}`// 邮编编码
-  const latitude = `latitude=${inSchool == "true" ? "23.208688735961914" : $.getdata("gdufe_latitude")}&` // 纬度
-  const longitude = `longitude=${inSchool == "true" ? "112.85215759277344" : $.getdata("gdufe_longitude")}&` // 经度
-  const body = `${answers}${seq}${temperature}${userId}${latitude}${longitude}${country}${province}${city}${district}${township}${street}${myArea}${areacode}`
-  const arr = ["province", "city", "district", "township", "street", "areacode", "latitude", "longitude"]
-  const arr_cn = ["所在省份", "所在城市", "所在行政区", "所在街道", "所在道路", "所在地邮政编码", "纬度", "经度"]
-  for (var m = 0; m < body.split("&").length; m++) {
-    for (var n = 0; n < arr.length; n++) {
-      if (body.split("&")[m].indexOf(arr[n]) != -1) {
-        $.log(`✅${arr_cn[n]} --> ${decodeURIComponent(body.split("&")[m].split("=")[1])}`)
-      }
-    }
-  }
+  const province = `province=${$.province ? $.province : inSchool == "true" ? "广东省" : $.getdata("gdufe_province")}&`
+  const city = `city=${$.city ? $.city : inSchool == "true" ? "佛山市" : $.getdata("gdufe_city")}&`
+  const district = `district=${$.district ? $.district : inSchool == "true" ? "三水区" : $.getdata("gdufe_district")}&`
+  const township = `township=${$.township ? $.township : inSchool == "true" ? "云海东街道" : $.getdata("gdufe_township")}&`
+  const street = `street=${$.street ? $.street : inSchool == "true" ? "大学路" : $.getdata("gdufe_street")}&`
+  const areacode = `areacode=${$.areacode ? $.areacode : inSchool == "true" ? "440607" : $.getdata("gdufe_areacode")}`
+  const latitude = `latitude=${$.latitude ? $.latitude : inSchool == "true" ? "23.212478651049256" : $.getdata("gdufe_latitude")}&` // 纬度
+  const longitude = `longitude=${$.longitude ? $.longitude : inSchool == "true" ? "112.86226153904119" : $.getdata("gdufe_longitude")}&` // 经度
+  const body0 = `${answers}${seq}${temperature}${userId}`
+  const body1 = `${latitude}${longitude}${country}${province}${city}${district}${township}${street}`
+  const body2 = `${myArea}${areacode}`
+  const body = `${body0}${body1}${body2}`
   return new Promise(resolve => {
     const options = {
       url: `${host}heat/save.json`,
@@ -192,11 +263,11 @@ function jwdosign() {
         if (data) {
           $.checkin = JSON.parse(data)
         } else if (err) {
-          $.log(`❌签到时API请求失败！`)
+          $.log(`❌签到时API请求失败`)
           $.log(JSON.stringify(err))
         }
       } catch (e) {
-        $.log(`❌签到时发生错误！`)
+        $.log(`❌签到时发生错误`)
         $.logErr(e, resp)
       } finally {
         resolve()
@@ -213,6 +284,8 @@ async function jwsign() {
   if ($.list != -10) {
     if ($.list.state == 1 && $.list.type == 0) {
       $.log(`⭕${period().t}没有打卡`)
+      await geocoding()
+      await reverse_geocoding()
       await jwdosign()
       if ($.checkin.code == 0) {
         $.log(`✅${period().t}打卡成功`)
