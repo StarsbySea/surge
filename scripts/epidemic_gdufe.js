@@ -99,7 +99,7 @@ function jwtask() {
       url: `${host}heat/getTodayHeatList.json`,
       headers: {"JWSESSION": $.getdata("gdufe_JWSESSION")}
     }
-    $.log(`🧑‍💻获取当天日检日报情况……`)
+    $.log(`🧑‍💻获取当天日检日报情况`)
     $.post(options, (err, resp ,data) => {
       try {
         if (data) {
@@ -131,7 +131,7 @@ function jwsession() {
       headers: {"User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 15_0_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 "},
       body: `{}`
     }
-    $.log(`🧑‍💻正在获取新的JWSESSION值……`)
+    $.log(`🧑‍💻正在获取新的JWSESSION值`)
     $.post(options, (err, resp, data) => {
       try {
         if (data) {
@@ -163,7 +163,7 @@ function geocoding() {
     const options = {
       url: `https://api.map.baidu.com/geocoding/v3/?address=${encodeURI(address)}&output=json&ak=${bddt_ak}`
     }
-    $.log(`🧑‍💻正在通过地址转换出经纬度……`)
+    $.log(`🧑‍💻正在通过地址转换出经纬度`)
     $.get(options, (err, resp, data) => {
       try {
         if (data) {
@@ -189,7 +189,7 @@ function geocoding() {
 }
 
 function reverse_geocoding() {
-  $.log(`🧑‍💻正在通过经纬度转换出地址……`)
+  $.log(`🧑‍💻正在通过经纬度转换出地址信息`)
   return new Promise(resolve => {
     const options = {
       url: `https://api.map.baidu.com/reverse_geocoding/v3/?ak=${bddt_ak}&output=json&location=${$.latitude ? $.latitude : inSchool == "true" ? "23.212478651049256" : $.getdata("gdufe_latitude")},${$.longitude ? $.longitude : inSchool == "true" ? "112.86226153904119" : $.getdata("gdufe_longitude")}&extensions_town=true`
@@ -217,12 +217,12 @@ function reverse_geocoding() {
           $.log(`✅行政编码 --> ${$.areacode}`)
           if ($.getdata("gdufe_areacode") != $.areacode) {$.setdata($.areacode, "gdufe_areacode")}
         } else if (err) {
-          $.log(`❌获取地址时API请求失败`)
+          $.log(`⭕获取地址时API请求失败`)
           $.log(`⭕将使用默认地址`)
           $.log(JSON.stringify(err))
         }
       } catch (e) {
-        $.log(`❌获取地址时发生错误`)
+        $.log(`⭕获取地址时发生错误`)
         $.log(`⭕将使用默认地址`)
         $.logErr(e, resp)
       } finally {
@@ -257,7 +257,7 @@ function jwdosign() {
       headers: {"JWSESSION": $.getdata("gdufe_JWSESSION")},
       body: encodeURI(body)
     }
-    $.log(`🧑‍💻信息完成组装，开始${period().t}打卡……`)
+    $.log(`🧑‍💻信息完成组装，开始${period().t}打卡`)
     $.post(options, (err, resp, data) => {
       try {
         if (data) {
@@ -277,7 +277,7 @@ function jwdosign() {
 }
 
 async function jwsign() {
-  if ($.list != -10) {
+  if ($.list == -10) {
     delete $.list
     await jwtask()
   }
@@ -289,11 +289,11 @@ async function jwsign() {
       await jwdosign()
       if ($.checkin.code == 0) {
         $.log(`✅${period().t}打卡成功`)
-        $.log(`✅返回数据包：${JSON.stringify(data)}`)
+        $.log(`✅返回数据包：${JSON.stringify($.checkin)}`)
         $.msg($.name, `✅${period().t}打卡成功`, ``)
       } else {
         $.log(`❌${period().t}打卡失败`)
-        $.log(`❌返回数据包：${JSON.stringify(data)}`)
+        $.log(`❌返回数据包：${JSON.stringify($.checkin)}`)
         $.msg($.name, `❌${period().t}打卡失败`, ``)
       }
     } else {
