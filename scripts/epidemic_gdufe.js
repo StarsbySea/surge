@@ -297,7 +297,7 @@ async function jwsign() {
       }
     } else {
       $.log(`✅${period().t}已经打卡了！`)
-      $.msg($.name, `✅${period().t}已经打卡`, ``)
+      // $.msg($.name, `✅${period().t}已经打卡`, ``)
     }
   }
 }
