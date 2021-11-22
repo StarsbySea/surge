@@ -299,6 +299,9 @@ async function jwsign() {
       $.log(`✅${period().t}已经打卡了！`)
       // $.msg($.name, `✅${period().t}已经打卡`, ``)
     }
+  } else {
+    $.log(`❌登录失败！建议改密码后再尝试！`)
+    $.msg($.name, `❌登录失败！建议改密码后再尝试！`, ``)
   }
 }
 
