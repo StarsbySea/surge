@@ -21,7 +21,7 @@ const host = "http://home.yngqt.org.cn/"
 const difference = $.read("qndxx_difference") * 1 || 42
 const study = $.read("qndxx_study")
 const cookie = {"Cookie": $.read("qndxx_cookie")}
-const num = $.read("qndxx_num") * 1 < 4 ? 4 : $.read("qndxx_num") * 1 || 4
+const num = $.read("qndxx_num") * 1 < 2 ? 2 : $.read("qndxx_num") * 1 || 2
 const illustrate = `微信 => 通讯录 => 公众号 => 云南共青团 => 大学习 => 注册团员登录学习 => 我的 => 签到`
 typeof $request !== 'undefined' ? set() : sign()
 
