@@ -76,7 +76,7 @@ function sign() {
               const studyz = {url: `${host}qndxx/xuexi.ashx`, headers: cookie, body: {"txtid": txtid(arr.length + 2)}}
               $.post(studyz, (err, resp, data) => {$.log(JSON.parse(data).message); $.done()})
             } else {
-              $.log(`不进行复习模式`); $.done()
+              $.log(`不进行复习，脚本完成`); $.done()
             }
           }
         })
