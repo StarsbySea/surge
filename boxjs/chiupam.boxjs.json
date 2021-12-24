@@ -238,12 +238,6 @@
           "val": true,
           "type": "boolean",
           "desc": "开启则表示进行每周学习,建议假期关闭该选项"
-        },{
-          "id": "qndxx_review",
-          "name": "开启复习模式",
-          "val": true,
-          "type": "boolean",
-          "desc": "开启则表示进行往前学习,建议开启该选项"
         },
         {
           "id": "qndxx_difference",
@@ -253,11 +247,18 @@
           "desc": "抓到学习包中txtid的值与脚本计算的周数的差值,不会的可不填(42)"
         },
         {
+          "id": "qndxx_review",
+          "name": "开启复习模式",
+          "val": true,
+          "type": "boolean",
+          "desc": "开启则表示进行往前学习,建议开启该选项"
+        },
+        {
           "id": "qndxx_num",
           "name": "学习往期大学习",
           "val": "",
           "type": "number",
-          "desc": "学习往期大学习,不可少于4期,不填则默认4期"
+          "desc": "学习往期大学习,不可少于2期,不填则默认2期"
         }
       ],
       "author": "@chiupam",
