@@ -238,6 +238,12 @@
           "val": true,
           "type": "boolean",
           "desc": "开启则表示进行每周学习,建议假期关闭该选项"
+        },{
+          "id": "qndxx_review",
+          "name": "开启复习模式",
+          "val": true,
+          "type": "boolean",
+          "desc": "开启则表示进行往前学习,建议开启该选项"
         },
         {
           "id": "qndxx_difference",

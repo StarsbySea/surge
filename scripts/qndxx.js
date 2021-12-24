@@ -20,6 +20,7 @@ const appName = '🌼 青年大学习 🌼'
 const host = "http://home.yngqt.org.cn/"
 const difference = $.read("qndxx_difference") * 1 || 42
 const study = $.read("qndxx_study")
+const review = $.read("qndxx_review")
 const cookie = {"Cookie": $.read("qndxx_cookie")}
 const num = $.read("qndxx_num") * 1 < 2 ? 2 : $.read("qndxx_num") * 1 || 2
 const illustrate = `微信 => 通讯录 => 公众号 => 云南共青团 => 大学习 => 注册团员登录学习 => 我的 => 签到`
@@ -64,15 +65,19 @@ function sign() {
             $.notice(appName, JSON.parse(data).message, illustrate, "http://boxjs.net/")
             $.done()
           } else {
-            let arr = []
-            for (let i = 1; i < num; i++) {arr.push(i)}
-            $.log(`学习前面的 ${arr.length + 1} 期青年大学习`)
-            for(let i = 0; i　< arr.length; i++) {
-              const studyx = {url: `${host}qndxx/xuexi.ashx`, headers: cookie, body: {"txtid": txtid(arr[i])}}
-              $.post(studyx, (err, resp, data) => {$.log(JSON.parse(data).message)})
+            if (review == "true") {
+              let arr = []
+              for (let i = 1; i < num; i++) {arr.push(i)}
+              $.log(`学习前面的 ${arr.length + 1} 期青年大学习`)
+              for(let i = 0; i　< arr.length; i++) {
+                const studyx = {url: `${host}qndxx/xuexi.ashx`, headers: cookie, body: {"txtid": txtid(arr[i])}}
+                $.post(studyx, (err, resp, data) => {$.log(JSON.parse(data).message)})
+              }
+              const studyz = {url: `${host}qndxx/xuexi.ashx`, headers: cookie, body: {"txtid": txtid(arr.length + 2)}}
+              $.post(studyz, (err, resp, data) => {$.log(JSON.parse(data).message); $.done()})
+            } else {
+              $.log(`不进行复习模式`); $.done()
             }
-            const studyz = {url: `${host}qndxx/xuexi.ashx`, headers: cookie, body: {"txtid": txtid(arr.length + 2)}}
-            $.post(studyz, (err, resp, data) => {$.log(JSON.parse(data).message); $.done()})
           }
         })
       }
