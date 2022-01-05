@@ -18,7 +18,7 @@ sgmoudule: https://raw.githubusercontent.com/chiupam/surge/main/Surge/Task.sgmod
 const $ = new Env()
 const appName = '🌼 青年大学习 🌼'
 const host = "http://home.yngqt.org.cn/"
-const difference = $.read("qndxx_difference") * 1 || 42
+const difference = $.read("qndxx_difference") * 1 || 94
 const study = $.read("qndxx_study")
 const review = $.read("qndxx_review")
 const cookie = {"Cookie": $.read("qndxx_cookie")}

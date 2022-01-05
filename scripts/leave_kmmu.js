@@ -33,7 +33,8 @@ if (isLeave == 'false') {
   time.setHours(Math.min(23, (nowHour + 2)))
   const LeaveEndTime = time.format("hh")
   const LeaveBeginDate = time.format("yyyy-MM-dd")
-  const interval = $.read("interval") * 1 || 1
+  // const interval = $.read("interval") * 1 || 1
+  const interval = 1
   time.setDate(time.getDate() + interval - 1)
   const LeaveEndDate = time.format("yyyy-MM-dd")
   const LeaveNumNo = ((LeaveEndTime - LeaveBeginTime) / 24 + interval * 1 - 1).toFixed(2)

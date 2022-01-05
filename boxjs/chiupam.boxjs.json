@@ -21,14 +21,6 @@
           "desc": "开启则表示修改假条,默认开启,关闭则以下设置都不生效"
         },
         {
-          "id": "interval",
-          "name": "请假天数",
-          "val": "",
-          "type": "number",
-          "placeholder": "(点击以展开说明)",
-          "desc": "您请假的天数,1为当天,不填写则默认当天"
-        },
-        {
           "id": "LeaveType",
           "name": "请假类型",
           "val": "事假",
@@ -244,7 +236,7 @@
           "name": "周数差值",
           "val": "",
           "type": "text",
-          "desc": "抓到学习包中txtid的值与脚本计算的周数的差值,不会的可不填(42)"
+          "desc": "抓到学习包中txtid的值与脚本计算的周数的差值,不会的可不填(94)"
         },
         {
           "id": "qndxx_review",
@@ -268,170 +260,6 @@
         "https://raw.githubusercontent.com/chiupam/surge/main/boxjs/icon/qndxx.jpg",
         "https://raw.githubusercontent.com/chiupam/surge/main/boxjs/icon/qndxx.jpg"
       ]
-    },
-    {
-        "id": "leave_gdufe",
-        "name": "请假假条",
-        "keys": [],
-        "descs_html": [
-          "<h4 align=\"center\">广东财经大学假条,请按说明修改信息</a></h4>"
-        ],
-        "settings": [
-          {
-            "id": "gdufe_isLeave",
-            "name": "请假总开关",
-            "val": true,
-            "type": "boolean",
-            "desc": "开启则表示修改假条,默认开启,关闭则以下设置都不生效"
-          },
-          {
-            "id": "gdufe_type",
-            "name": "请假类型",
-            "val": "事假",
-            "type": "radios",
-            "items": [
-              {
-                "key": "事假",
-                "label": "事假"
-              }, 
-              {
-                "key": "病假",
-                "label": "病假"
-              }, 
-              {
-                "key": "回家",
-                "label": "回家"
-              }, 
-              {
-                "key": "实习",
-                "label": "实习"
-              }
-            ]
-          }, 
-          {
-            "id": "gdufe_reason",
-            "name": "请假事由",
-            "val": "",
-            "type": "text",
-            "placeholder": "(点击以展开说明)",
-            "desc": "您请假的事由"
-          }, 
-          {
-            "id": "gdufe_route",
-            "name": "外出地点",
-            "val": "",
-            "type": "text",
-            "placeholder": "(点击以展开说明)",
-            "desc": "您请假外出的地点"
-          }, 
-          {
-            "id": "gdufe_studentName",
-            "name": "学生姓名",
-            "val": "",
-            "type": "text",
-            "placeholder": "(点击以展开说明)",
-            "desc": "您的姓名"
-          },
-          {
-            "id": "gdufe_studentId",
-            "name": "学生学号",
-            "val": "",
-            "type": "text",
-            "placeholder": "(点击以展开说明)",
-            "desc": "您的姓名"
-          },
-          {
-            "id": "gdutf_phone",
-            "name": "学生手机号码",
-            "val": "",
-            "type": "text",
-            "placeholder": "(点击以展开说明)",
-            "desc": "您的手机号码"
-          },
-          {
-            "id": "gdufe_college",
-            "name": "所属学院",
-            "val": "",
-            "type": "text",
-            "placeholder": "(点击以展开说明)",
-            "desc": "您所属的学院"
-          },
-          {
-            "id": "gdufe_grade",
-            "name": "所属班级",
-            "val": "",
-            "type": "text",
-            "placeholder": "(点击以展开说明)",
-            "desc": "您所属的班级"
-          }, 
-          {
-            "id": "gdufe_teacher",
-            "name": "辅导员",
-            "val": "",
-            "type": "text",
-            "placeholder": "(点击以展开说明)",
-            "desc": "您归属的辅导员"
-          }, 
-          {
-            "id": "gdufe_id",
-            "name": "假条封面id",
-            "val": "",
-            "type": "number",
-            "placeholder": "(点击以展开说明)",
-            "desc": "您所看见的假条封面姓名下的数字"
-          }
-        ],
-        "author": "@chiupam",
-        "repo": "https://github.com/chiupam/surge/tree/main",
-        "icons": [
-          "https://raw.githubusercontent.com/chiupam/surge/main/boxjs/icon/gdufe.jpeg",
-          "https://raw.githubusercontent.com/chiupam/surge/main/boxjs/icon/gdufe.jpeg"
-        ]
-      },
-      {
-          "id": "epidemic_gdufe",
-          "name": "日检日报",
-          "keys": [],
-          "descs_html": [
-            "<h4 align=\"center\">广东财经大学日检日报,请按说明修改信息</a></h4>"
-          ],
-          "settings": [
-            {
-              "id": "gdufe_username",
-              "name": "登录用户名",
-              "val": "",
-              "type": "text",
-              "desc": "登录我在校园的用户名,填写是为了获取JWSESSION"
-            },
-            {
-              "id": "gdufe_pwd",
-              "name": "登录密码",
-              "val": "",
-              "type": "text",
-              "desc": "登录我在校园的密码,填写是为了获取JWSESSION"
-            },
-            {
-              "id": "gdufe_inSchool",
-              "name": "是否在校",
-              "val": true,
-              "type": "boolean",
-              "desc": "开启则表示您目前定位在学校,以下信息都不起效,默认开启"
-            },
-            {
-              "id": "gdufe_address",
-              "name": "家庭住址",
-              "val": "",
-              "type": "text",
-              "desc": "填写您的家庭地址,用于寒暑假签到"
-            }
-          ],
-          "author": "@chiupam",
-          "repo": "https://github.com/chiupam/surge/tree/main",
-          "script": "https://raw.githubusercontent.com/chiupam/surge/main/scripts/epidemic_gdufe.js",
-          "icons": [
-            "https://raw.githubusercontent.com/chiupam/surge/main/boxjs/icon/gdufe.jpeg",
-            "https://raw.githubusercontent.com/chiupam/surge/main/boxjs/icon/gdufe.jpeg"
-          ]
-        }
+    }
   ]
 }
