@@ -1,5 +1,6 @@
 [Script]
 http-response ^https?:\/\/xg\.kmmu\.edu.cn\/KmmcXG\/webapi\/api\/Leave\/AllLeaveManage(_Edit)?\?LoginStatus=.* script-path=https://raw.githubusercontent.com/chiupam/surge/main/scripts/leave_kmmu.js, requires-body=true, timeout=120, tag=学工假条
+cron "0 0 29 2 2024" script-path=https://raw.githubusercontent.com/chiupam/surge/main/scripts/faker_kmmu.js, tag=手动修改假条
 
 [Mitm]
 hostname = xg.kmmu.edu.cn
