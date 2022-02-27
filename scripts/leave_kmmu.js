@@ -9,8 +9,9 @@ hostname = %APPEND% xg.kmmu.edu.c(n|om)
 
 git: https://github.com/chiupam/surge/blob/main/scripts/leave_kmmu.js
 raw: https://raw.githubusercontent.com/chiupam/surge/main/scripts/leave_kmmu.js
-plugin: https://raw.githubusercontent.com/chiupam/surge/main/Loon/Leave.plugin
+plugin: https://raw.githubusercontent.com/chiupam/surge/main/Loon/leave_kmmu.plugin
 sgmoudule: https://raw.githubusercontent.com/chiupam/surge/main/Surge/Leave.sgmodule
+box: https://raw.githubusercontent.com/chiupam/surge/main/boxjs/chiupam.boxjs.json
 
 */
 Date.prototype.format = function(formatTime) { 
