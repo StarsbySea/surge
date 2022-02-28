@@ -36,8 +36,8 @@ Date.prototype.format = function(formatTime) {
 var $ = Env()
 var Url = $request.url
 var Body = JSON.parse($response.body)
-const isLeave = $.read('isLeave') || 'true'
-if (isLeave == 'false') {
+const isLeave = $.read("isLeave") || "true"
+if (isLeave == "false") {
   Body = JSON.parse($response.body)
 } else {
   const time = new Date()
@@ -52,17 +52,17 @@ if (isLeave == 'false') {
   time.setDate(time.getDate() + interval - 1)
   const LeaveEndDate = time.format("yyyy-MM-dd")
   const LeaveNumNo = ((LeaveEndTime - LeaveBeginTime) / 24 + interval * 1 - 1).toFixed(2)
-  const LeaveType = $.read('LeaveType') || '事假'
-  const LeaveThing = $.read('LeaveThing') || '有事外出'
-  const WithNumNo = $.read('WithNumNo') || '0'
-  const OutAddress = $.read('OutAddress') || ''
-  const StudentName = $.read('StudentName') || ''
-  const StudentTel = $.read('StudentTel') || ''
-  const ParentName = $.read('ParentName') || ''
-  const ParentTel = $.read('ParentTel') || ''
-  const Vehicle = $.read('Vehicle') || '汽车'
+  const LeaveType = $.read("LeaveType") || "事假"
+  const LeaveThing = $.read("LeaveThing") || "有事外出"
+  const WithNumNo = $.read("WithNumNo") || "0"
+  const OutAddress = $.read("OutAddress") || ""
+  const StudentName = $.read("StudentName") || ""
+  const StudentTel = $.read("StudentTel") || ""
+  const ParentName = $.read("ParentName") || ""
+  const ParentTel = $.read("ParentTel") || ""
+  const Vehicle = $.read("Vehicle") || "汽车"
   const ID = Math.random().toString().substr(2, 4)
-  if (Url.indexOf('_Edit') == -1) {
+  if (Url.indexOf("_Edit") == -1) {
     Body= {
       "AllLeaveManages": [{
         "LeaveType": LeaveType,
@@ -136,15 +136,15 @@ function Env() {
   }
   get = (url, cb) => {
     if (LN || SG) {$httpClient.get(url, cb)}
-    if (QX) {url.method = 'GET'; $task.fetch(url).then((resp) => cb(null, {}, resp.body))}
+    if (QX) {url.method = "GET"; $task.fetch(url).then((resp) => cb(null, {}, resp.body))}
   }
   post = (url, cb) => {
     if (LN || SG) {$httpClient.post(url, cb)}
-    if (QX) {url.method = 'POST'; $task.fetch(url).then((resp) => cb(null, {}, resp.body))}
+    if (QX) {url.method = "POST"; $task.fetch(url).then((resp) => cb(null, {}, resp.body))}
   }
   put = (url, cb) => {
     if (LN || SG) {$httpClient.put(url, cb)}
-    if (QX) {url.method = 'PUT'; $task.fetch(url).then((resp) => cb(null, {}, resp.body))}
+    if (QX) {url.method = "PUT"; $task.fetch(url).then((resp) => cb(null, {}, resp.body))}
   }
   log = (message) => console.log(message)
   done = (value = {}) => {$done(value)}
