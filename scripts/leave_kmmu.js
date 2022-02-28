@@ -1,5 +1,6 @@
 /*
 
+##### Surge #####
 [Script]
 # > 易班假条(xg.kmmu.edu.c(n|om))
 易班假条 = type=http-response, pattern=^https?:\/\/xg\.kmmu\.edu.cn\/KmmcXG\/webapi\/api\/Leave\/AllLeaveManage(_Edit)?\?LoginStatus=.*, requires-body=1, max-size=-1, script-path=https://raw.githubusercontent.com/chiupam/surge/main/scripts/leave_kmmu.js
@@ -7,13 +8,25 @@
 [Mitm]
 hostname = %APPEND% xg.kmmu.edu.c(n|om)
 
-git: https://github.com/chiupam/surge/blob/main/scripts/leave_kmmu.js
+##### Loon #####
+[Script]
+http-response ^https?:\/\/xg\.kmmu\.edu.cn\/KmmcXG\/webapi\/api\/Leave\/AllLeaveManage(_Edit)?\?LoginStatus=.* script-path=https://raw.githubusercontent.com/chiupam/surge/main/scripts/leave_kmmu.js, requires-body=true, timeout=120, tag=学工假条
+
+[Mitm]
+hostname = xg.kmmu.edu.cn
+
+type: http-response
+body: true
 raw: https://raw.githubusercontent.com/chiupam/surge/main/scripts/leave_kmmu.js
+regex: ^https?:\/\/xg\.kmmu\.edu.cn\/KmmcXG\/webapi\/api\/Leave\/AllLeaveManage(_Edit)?\?LoginStatus=.*
+
+git: https://github.com/chiupam/surge/blob/main/scripts/leave_kmmu.js
 plugin: https://raw.githubusercontent.com/chiupam/surge/main/Loon/leave_kmmu.plugin
 sgmoudule: https://raw.githubusercontent.com/chiupam/surge/main/Surge/Leave.sgmodule
 box: https://raw.githubusercontent.com/chiupam/surge/main/boxjs/chiupam.boxjs.json
 
 */
+
 Date.prototype.format = function(formatTime) { 
   var o = {"M+" : this.getMonth() + 1, "d+": this.getDate(), "h+": this.getHours()}
   if(/(y+)/.test(formatTime)) {formatTime=formatTime.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length))}

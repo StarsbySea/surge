@@ -1,5 +1,6 @@
 /*
 
+##### Surge #####
 [Script]
 # > 青年大学习获取Cookie (home.yngqt.org.cn)
 青年大学习获取Cookie = type=http-request,pattern=^https?:\/\/home\.yngqt\.org\.cn\/qndxx\/user\/qiandao\.ashx, ,requires-body=1, max-size=-1, script-path=https://raw.githubusercontent.com/chiupam/surge/main/scripts/qndxx.js
@@ -8,6 +9,23 @@
 
 [MITM]
 hostname = %APPEND% home.yngqt.org.cn
+
+##### Loon #####
+[Script]
+http-request ^https?:\/\/home\.yngqt\.org\.cn\/qndxx\/user\/qiandao\.ashx script-path=https://raw.githubusercontent.com/chiupam/surge/main/scripts/qndxx.js, requires-body=true, timeout=120, tag=青年大学习获取Cookie
+cron "13 13 13,23 * * *" script-path=https://raw.githubusercontent.com/chiupam/surge/main/scripts/qndxx.js, tag=青年大学习
+
+[Mitm]
+hostname = home.yngqt.org.cn
+
+type: http-request
+body: true
+raw: https://raw.githubusercontent.com/chiupam/surge/main/scripts/qndxx.js
+regex: ^https?:\/\/home\.yngqt\.org\.cn\/qndxx\/user\/qiandao\.ashx
+
+type: cron
+crontab: 13 13 13,23 * * *
+raw: https://raw.githubusercontent.com/chiupam/surge/main/scripts/qndxx.js
 
 git: https://github.com/chiupam/surge/blob/main/scripts/qndxx.js
 raw: https://raw.githubusercontent.com/chiupam/surge/main/scripts/qndxx.js
@@ -18,7 +36,7 @@ sgmoudule: https://raw.githubusercontent.com/chiupam/surge/main/Surge/Task.sgmod
 const $ = new Env()
 const appName = '🌼 青年大学习 🌼'
 const host = "http://home.yngqt.org.cn/"
-const difference = $.read("qndxx_difference") * 1 || 94
+const difference = $.read("qndxx_difference") * 1 || 87
 const study = $.read("qndxx_study")
 const review = $.read("qndxx_review")
 const cookie = {"Cookie": $.read("qndxx_cookie")}
