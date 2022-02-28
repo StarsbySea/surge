@@ -7,6 +7,9 @@ $.write("17589651004", "ParentTel") // 您家长的电话
 $.write("云上小镇", "OutAddress") // 您的外出地址
 $.write("1", "WithNumNo") // 同行人数
 
+
+$.notice("【学工假条】", "修改成功！", "点击跳转到BoxJs中查看具体参数", "http://boxjs.net/")
+
 function Env() {
   LN = typeof $loon != "undefined"
   SG = typeof $httpClient != "undefined" && !LN
