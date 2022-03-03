@@ -260,6 +260,29 @@
         "https://raw.githubusercontent.com/chiupam/surge/main/boxjs/icon/qndxx.jpg",
         "https://raw.githubusercontent.com/chiupam/surge/main/boxjs/icon/qndxx.jpg"
       ]
+    },
+    {
+      "id": "wskey",
+      "name": "京东值",
+      "key": [],
+      "descs_html": [
+        "<h4 align=\"center\">打开京东即可开启抓包</a></h4>"
+      ],
+      "settings": [
+        {
+          "id": "jd_wskey",
+          "name": "抓取到 wskey 的具体值",
+          "val": "",
+          "type": "textarea",
+          "desc": "复制它吧！"
+        }
+      ],
+      "author": "@chiupam",
+      "repo": "https://github.com/chiupam/surge",
+      "icons": [
+        "https://raw.githubusercontent.com/chiupam/surge/main/boxjs/icon/jd.jpeg",
+        "https://raw.githubusercontent.com/chiupam/surge/main/boxjs/icon/jd.jpeg"
+      ]
     }
   ]
 }
