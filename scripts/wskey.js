@@ -6,9 +6,15 @@ if (typeof $request !== 'undefined') {
 function set() {
   if ($request.headers) {
     var cookie = $request.headers.Cookie
-    var wskey = cookie.split(";")[0] + ";"
-    $.write(wskey, "jd_wskey")
-    $.notice("【京东】", "", "抓取成功！", "http://boxjs.net")
+    if ($$request.url == "https://api.m.jd.com/client.action?functionId=serverConfig") {
+      var pin = cookie.split(";")[1].split("_")[1] + ";"
+      $.write(pin, "jd_pin")
+      $.notice("【京东】", "", "抓取pin成功！", "http://boxjs.net")
+    } else {
+      var wskey = cookie.split(";")[0] + ";"
+      $.write(wskey, "jd_wskey")
+      $.notice("【京东】", "", "抓取wskey成功！", "http://boxjs.net")
+    }
   }
 }
 
