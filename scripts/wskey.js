@@ -8,15 +8,16 @@ function set() {
     var url = $request.url
     var cookie = $request.headers.Cookie
     var old = $.read("jd_wskey")
-    var pin = old.split(";")[0]
-    var wskey = old.split(";")[1]
+    var old_pin = old.split(";")[0] + ";"
+    var old_wskey = old.split(";")[1] + ";"
     if (url.indexOf("serverConfig") != -1) {
-      var pin = "pin=" + cookie.split(";")[1].split("=")[1] + ";"
-      var jd_wskey = pin + wskey + ";"
-      $.write(new_wskey, "jd_wskey")
+      var new_pin = "pin=" + cookie.split(";")[1].split("=")[1] + ";"
+      var jd_wskey = new_pin + old_wskey
+      $.write(jd_wskey, "jd_wskey")
     } else {
-      var jd_wskey = pin + ";" + cookie.split(";")[0] + ";"
-      $.write(new_wskey, "jd_wskey")
+      var new_wskey = cookie.split(";")[0] + ";"
+      var jd_wskey = old_pin + new_wskey
+      $.write(jd_wskey, "jd_wskey")
       $.notice("【京东】", "", "抓取wskey成功！", "http://boxjs.net")
     }
   }
