@@ -9,4 +9,4 @@ http-request ^https?:\/\/(?!d\.pcs).*(?<!map)\.baidu\.com script-path=https://ra
 ^http://ww6.boxjs.net http://boxjs.net 302
 
 [Mitm]
-hostname = boxjs.net, testflight.apple.com, *.baidu.com
+hostname = boxjs.net,testflight.apple.com,*.baidu.com

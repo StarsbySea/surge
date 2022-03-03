@@ -6,7 +6,8 @@ if (typeof $request !== 'undefined') {
 function set() {
   if ($request.headers) {
     var cookie = $request.headers.Cookie
-    if ($$request.url == "https://api.m.jd.com/client.action?functionId=serverConfig") {
+    var url = $request.url
+    if (url.indexOf("serverConfig") != -1) {
       var pin = cookie.split(";")[1].split("_")[1] + ";"
       $.write(pin, "jd_pin")
       $.notice("【京东】", "", "抓取pin成功！", "http://boxjs.net")
