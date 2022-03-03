@@ -272,7 +272,7 @@
         {
           "id": "jd_wskey",
           "name": "抓取到 wskey 的具体值",
-          "val": "",
+          "val": "pin=xxxxxx;wskey=xxxxxx;",
           "type": "textarea",
           "desc": "复制它吧！"
         }
