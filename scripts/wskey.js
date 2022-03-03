@@ -1,3 +1,33 @@
+/*
+
+type: http-request
+regex: ^https?:\/\/api\.m\.jd\.com\/client\.action\?functionId=(queryTemplates|serverConfig)$
+script-path: https://raw.githubusercontent.com/chiupam/surge/main/scripts/wskey.js
+box: https://raw.githubusercontent.com/chiupam/surge/main/boxjs/chiupam.boxjs.json
+
+###### Surge ######
+[Script]
+http-request ^https?:\/\/api\.m\.jd\.com\/client\.action\?functionId=(queryTemplates|serverConfig)$ script-path=https://raw.githubusercontent.com/chiupam/surge/main/scripts/wskey.js, requires-body=true, timeout=120, tag=京东获取wskey
+
+[Mitm]
+hostname = %APPEND% api.m.jd.com
+
+###### Loon ######
+[Script]
+http-request ^https?:\/\/api\.m\.jd\.com\/client\.action\?functionId=(queryTemplates|serverConfig)$ script-path=https://raw.githubusercontent.com/chiupam/surge/main/scripts/wskey.js, requires-body=true, timeout=120, tag=京东获取wskey
+
+[Mitm]
+hostname = api.m.jd.com
+
+###### QuanX ######
+[rewrite_local]
+^https?:\/\/api\.m\.jd\.com\/client\.action\?functionId=(queryTemplates|serverConfig)$ url script-request-header https://raw.githubusercontent.com/chiupam/surge/main/scripts/wskey.js
+
+[Mitm]
+hostname = api.m.jd.com
+
+*/
+
 const $ = Env()
 if (typeof $request !== 'undefined') {
   set()
@@ -5,9 +35,10 @@ if (typeof $request !== 'undefined') {
 
 function set() {
   if ($request.headers) {
+    var old = $.read("jd_wskey")
+    if (old.indexOf("wskey") == -1) {$.write("pin=xxxxxx;wskey=xxxxxx;", "jd_wskey")}
     var url = $request.url
     var cookie = $request.headers.Cookie
-    var old = $.read("jd_wskey")
     var old_pin = old.split(";")[0] + ";"
     var old_wskey = old.split(";")[1] + ";"
     if (url.indexOf("serverConfig") != -1) {
