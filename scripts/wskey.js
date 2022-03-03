@@ -36,7 +36,7 @@ if (typeof $request !== 'undefined') {
 function set() {
   if ($request.headers) {
     var old = $.read("jd_wskey")
-    if (old.indexOf("wskey") == -1) {$.write("pin=xxxxxx;wskey=xxxxxx;", "jd_wskey")}
+    if (!old) {$.write("pin=x;wskey=x;", "jd_wskey")}
     var url = $request.url
     var cookie = $request.headers.Cookie
     var old_pin = old.split(";")[0] + ";"
