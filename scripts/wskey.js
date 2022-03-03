@@ -18,7 +18,7 @@ function set() {
       var new_wskey = cookie.split(";")[0] + ";"
       var jd_wskey = old_pin + new_wskey
       $.write(jd_wskey, "jd_wskey")
-      $.notice("【京东】", "", "抓取wskey成功！", "http://boxjs.net")
+      $.notice("【京东】", "抓取wskey成功！", jd_wskey, "http://boxjs.net")
     }
   }
 }
