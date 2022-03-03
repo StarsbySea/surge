@@ -10,17 +10,15 @@ function set() {
     var old = $.read("jd_wskey")
     var old_pin = old.split(";")[0] + ";"
     var old_wskey = old.split(";")[1] + ";"
-    if (old_wskey != cookie.split(";")[0]) {
-      if (url.indexOf("serverConfig") != -1) {
-        var new_pin = "pin=" + cookie.split(";")[1].split("=")[1] + ";"
-        var jd_wskey = new_pin + old_wskey
-        $.write(jd_wskey, "jd_wskey")
-      } else {
-        var new_wskey = cookie.split(";")[0] + ";"
-        var jd_wskey = old_pin + new_wskey
-        $.write(jd_wskey, "jd_wskey")
-        $.notice("【京东】", "抓取wskey成功！", jd_wskey, "http://boxjs.net")
-      }
+    if (url.indexOf("serverConfig") != -1) {
+      var new_pin = "pin=" + cookie.split(";")[1].split("=")[1] + ";"
+      var jd_wskey = new_pin + old_wskey
+      $.write(jd_wskey, "jd_wskey")
+    } else {
+      var new_wskey = cookie.split(";")[0] + ";"
+      var jd_wskey = old_pin + new_wskey
+      $.write(jd_wskey, "jd_wskey")
+      $.notice("【京东】", "抓取wskey成功！", jd_wskey, "http://boxjs.net")
     }
   }
 }
