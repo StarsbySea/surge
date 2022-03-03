@@ -5,15 +5,18 @@ if (typeof $request !== 'undefined') {
 
 function set() {
   if ($request.headers) {
-    var cookie = $request.headers.Cookie
     var url = $request.url
+    var cookie = $request.headers.Cookie
+    var old = $.read("jd_wskey")
+    var pin = old.split(";")[0]
+    var wskey = old.split(";")[1]
     if (url.indexOf("serverConfig") != -1) {
-      var pin = cookie.split(";")[1].split("_")[1] + ";"
-      $.write(pin, "jd_pin")
-      $.notice("【京东】", "", "抓取pin成功！", "http://boxjs.net")
+      var pin = "pin=" + cookie.split(";")[1].split("=")[1] + ";"
+      var jd_wskey = pin + wskey + ";"
+      $.write(new_wskey, "jd_wskey")
     } else {
-      var wskey = cookie.split(";")[0] + ";"
-      $.write(wskey, "jd_wskey")
+      var jd_wskey = pin + ";" + cookie.split(";")[0] + ";"
+      $.write(new_wskey, "jd_wskey")
       $.notice("【京东】", "", "抓取wskey成功！", "http://boxjs.net")
     }
   }
