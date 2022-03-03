@@ -275,6 +275,13 @@
           "val": "",
           "type": "textarea",
           "desc": "复制它吧！"
+        },
+        {
+          "id": "jd_pin",
+          "name": "抓取到 pin 的具体值",
+          "val": "",
+          "type": "text",
+          "desc": "复制它吧！"
         }
       ],
       "author": "@chiupam",
