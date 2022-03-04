@@ -46,7 +46,7 @@ function set() {
     var jd_wskey = new_pin + old_wskey
     $.write(jd_wskey, "jd_wskey")
   } else {
-    var new_wskey = .match(/(wskey=[^;]*)/)[1] + ";"
+    var new_wskey = cookie.match(/(wskey=[^;]*)/)[1] + ";"
     var jd_wskey = old_pin + new_wskey
     $.write(jd_wskey, "jd_wskey")
     $.notice("【京东】", "抓取wskey成功！", jd_wskey, "http://boxjs.net")
