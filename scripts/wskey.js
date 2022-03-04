@@ -50,14 +50,13 @@ async function set() {
     jd_wskey = old_pin + new_wskey
     $.write(jd_wskey, "jd_wskey")
     $.notice("【京东】", "抓取wskey成功！", jd_wskey, "http://boxjs.net")
-    await tg(jd_wskey)
+    await tgNotify(jd_wskey)
   }
 }
 
 
-function tg(text) {
+function tgNotify(text) {
   return  new Promise(resolve => {
-    let ok = false
     TG_USER_ID = $.read("TG_USER_ID")
     TG_BOT_TOKEN = $.read("TG_BOT_TOKEN")
     if (TG_BOT_TOKEN && TG_USER_ID) {
@@ -70,28 +69,28 @@ function tg(text) {
       $.post(options, (err, resp, data) => {
         try {
           if (err) {
-            $.log('telegram发送通知消息失败！')
-            $.log(err);
+            $.log('发送通知消息失败！')
+            $.log(err)
           } else {
-            data = JSON.parse(data);
+            data = JSON.parse(data)
             if (data.ok) {
-              ok = true
-              $.log('Telegram发送通知消息完成。')
+              $.log('发送通知消息完成')
             } else if (data.error_code === 400) {
-              $.log('请主动给bot发送一条消息并检查接收用户ID是否正确。')
+              $.log('检查接收用户ID是否正确')
             } else if (data.error_code === 401){
-              $.log('Telegram bot token 填写错误。')
+              $.log('Telegram bot token 填写错误')
             }
           }
         } catch (e) {
-          $.logErr(e, resp);
+          $.log(e)
+          $.log(resp)
         } finally {
-          resolve(ok);
+          resolve()
         }
       })
     } else {
-      $.log('您未提供telegram机器人推送所需的TG_BOT_TOKEN和TG_USER_ID，取消telegram推送消息通知');
-      resolve(ok)
+      $.log('不进行 Telegram 推送');
+      resolve()
     }
   })
 }
