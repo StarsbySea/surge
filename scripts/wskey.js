@@ -35,23 +35,24 @@ if (typeof $request !== 'undefined') {
 }
 
 function set() {
-  if ($request.url.indexOf("basicConfig") > -1) {
-    let pincookie = ($request.headers['Cookie'] || $request.headers['cookie'] || '')
-    let pin = pincookie.match(/(pt_pin=[^;]*)/)[1].replace('pt_', '');
-    console.log(`pin:${pin}`)
-    $.write(pin, "pin")
+  var old = $.read("jd_wskey")
+  if (!old) {$.write("pin=xxxxxx;wskey=xxxxxx;", "jd_wskey")}
+  var old_pin = old.split(";")[0] + ";"
+  var old_wskey = old.split(";")[1] + ";"
+  var url = $request.url
+  var cookie = $request.headers.Cookie || $request.headers.cookie
+  if (url.indexOf("basicConfig") != -1) {
+    var new_pin = cookie.match(/(pt_pin=[^;]*)/)[1].replace('pt_', '')
+    var jd_wskey = new_pin + old_wskey
+    $.write(jd_wskey, "jd_wskey")
+    $.log(new_pin)
   }
-  if ($request.url.indexOf("genToken") > -1) {
-    let keycookie = ($request.headers['Cookie'] || $request.headers['cookie'] || '')
-    let key = keycookie.match(/(wskey=[^;]*)/)[1]
-    console.log(`key:${key}`)
-    $.write(key, "key")
-  }
-  if ($.read("pin") && $.read("key")) {
-    let wskey = `${$.read("pin")};${$.read("key")};`
-    $.write("", "pin")
-    console.log(`wskey:${wskey}`)
-    $.notify($.name, `获取wskey成功🎉`, `${wskey}`);
+  if (url.indexOf("genToken") != -1) {
+    var new_wskey = cookie.match(/(wskey=[^;]*)/)[1]
+    var jd_wskey = old_pin + new_wskey + ";"
+    $.write(jd_wskey, "jd_wskey")
+    $.log(new_wskey)
+    $.notify("", "", $.read("jd_wskey"), "http://boxjs.net")
   }
 }
 
