@@ -62,7 +62,7 @@ function tg(text) {
     TG_BOT_TOKEN = $.read("TG_BOT_TOKEN")
     if (TG_BOT_TOKEN && TG_USER_ID) {
       const options = {
-        url: https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`,
+        url: `https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`,
         body: `chat_id=${TG_USER_ID}&text=${text}&disable_web_page_preview=true`,
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         timeout: 30000
