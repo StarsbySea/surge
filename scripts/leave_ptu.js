@@ -37,12 +37,12 @@ if (isLeave == 'false') {
   var preset_begin_date = ('0' + Day).slice(-2)
   var preset_end_date = ('0' + auto_end_date).slice(-2)
   var current_hours =  ('0' + hours).slice(-2)
-  const leaveType = $.read('leaveType') || '其他'
+  const leaveType = $.read('leaveType') || '出校事假\/病假'
   const leaveReason = $.read('leaveReason') || '外出购买生活用品'
-  const destination = $.read('destination') || ''
+  const destination = $.read('destination') || '福建省\/莆田市\/城厢区\/双洋环球广场'
   const studentInfo = $.read('studentInfo') || ''
-  const urgencyMobile = $.read('urgencyMobile') || ''
-  const approverName = $.read('approverName') || ''
+  const urgencyMobile = $.read('urgencyMobile') || '13860321207'
+  const approverName = $.read('approverName') || '黄芦峰'
   const begin_date = $.read('begin_date') || preset_begin_date
   const end_date = $.read('end_date') || preset_end_date
   const begin_hours = $.read('begin_hours') || auto_begin_hours || '08'
@@ -141,9 +141,9 @@ if (isLeave == 'false') {
           "status": "2",
           "applyLocation": {
             "locationType": 0,
-            "latitude": "24.982288",
-            "longitude": "102.805404",
-            "address": "中国云南省昆明市官渡区阿拉街道云大北路1号"
+            "latitude": "25.448533402936466",
+            "longitude": "119.01389371358302",
+            "address": "福建省莆田市城厢区福兴路"
           },
           "actStatus": "7",
           "disclaimers": "本人承诺填写的信息真实有效，并对本次提交请假申请的信息真实性负责。",
@@ -160,7 +160,7 @@ if (isLeave == 'false') {
         "notOutReport": {
           "setedNotOutReport": 1,
           "rule": 0,
-          "operatorName": "李雄",
+          "operatorName": "黄芦峰",
           "operatorDate": "2021-06-07 10:06:36"
         }
       },
