@@ -1,27 +1,27 @@
 /*
 
 type: http-request
-regex: ^https?:\/\/api\.m\.jd\.com\/client\.action\?functionId=(basicConfig|genToken)$
+regex: ^https?:\/\/api\.m\.jd\.com\/client\.action\?functionId=(genToken|serverConfig)$
 script-path: https://raw.githubusercontent.com/chiupam/surge/main/scripts/wskey.js
 box: https://raw.githubusercontent.com/chiupam/surge/main/boxjs/chiupam.boxjs.json
 
 ###### Surge ######
 [Script]
-http-request ^https?:\/\/api\.m\.jd\.com\/client\.action\?functionId=(basicConfig|genToken)$ script-path=https://raw.githubusercontent.com/chiupam/surge/main/scripts/wskey.js, requires-body=true, timeout=120, tag=京东获取wskey
+http-request ^https?:\/\/api\.m\.jd\.com\/client\.action\?functionId=(genToken|serverConfig)$ script-path=https://raw.githubusercontent.com/chiupam/surge/main/scripts/wskey.js, requires-body=true, timeout=120, tag=京东获取wskey
 
 [Mitm]
 hostname = %APPEND% api.m.jd.com
 
 ###### Loon ######
 [Script]
-http-request ^https?:\/\/api\.m\.jd\.com\/client\.action\?functionId=(basicConfig|genToken)$ script-path=https://raw.githubusercontent.com/chiupam/surge/main/scripts/wskey.js, requires-body=true, timeout=120, tag=京东获取wskey
+http-request ^https?:\/\/api\.m\.jd\.com\/client\.action\?functionId=(genToken|serverConfig)$ script-path=https://raw.githubusercontent.com/chiupam/surge/main/scripts/wskey.js, requires-body=true, timeout=120, tag=京东获取wskey
 
 [Mitm]
 hostname = api.m.jd.com
 
 ###### QuanX ######
 [rewrite_local]
-^https?:\/\/api\.m\.jd\.com\/client\.action\?functionId=(basicConfig|genToken)$ url script-request-header https://raw.githubusercontent.com/chiupam/surge/main/scripts/wskey.js
+^https?:\/\/api\.m\.jd\.com\/client\.action\?functionId=(genToken|serverConfig)$ url script-request-header https://raw.githubusercontent.com/chiupam/surge/main/scripts/wskey.js
 
 [Mitm]
 hostname = api.m.jd.com
@@ -35,27 +35,23 @@ if (typeof $request !== 'undefined') {
 }
 
 function set() {
-  var old = $.read("jd_wskey")
-  if (!old) {$.write("pin=xxxxxx;wskey=xxxxxx;", "jd_wskey")}
-  var old_pin = old.split(";")[0] + ";"
-  var old_wskey = old.split(";")[1] + ";"
-  var url = $request.url
-  var cookie = $request.headers.Cookie || $request.headers.cookie
-  if (url.indexOf("basicConfig") != -1) {
-    var new_pin = cookie.match(/(pt_pin=[^;]*)/)[1].replace('pt_', '')
+  url = $request.url
+  old = $.read("jd_wskey")
+  if (!old) {$.write("pin=x;wskey=x;", "jd_wskey")}
+  cookie = $request.headers.Cookie
+  old_pin = old.split(";")[0] + ";"
+  old_wskey = old.split(";")[1] + ";"
+  if (url.indexOf("serverConfig") != -1) {
+    var new_pin = cookie.match(/(pt_pin=[^;]*)/)[1].replace('pt_', '') + ";"
     var jd_wskey = new_pin + old_wskey
     $.write(jd_wskey, "jd_wskey")
-    $.log(new_pin)
-  }
-  if (url.indexOf("genToken") != -1) {
-    var new_wskey = cookie.match(/(wskey=[^;]*)/)[1]
-    var jd_wskey = old_pin + new_wskey + ";"
+  } else {
+    var new_wskey = .match(/(wskey=[^;]*)/)[1] + ";"
+    var jd_wskey = old_pin + new_wskey
     $.write(jd_wskey, "jd_wskey")
-    $.log(new_wskey)
-    $.notify("", "", $.read("jd_wskey"), "http://boxjs.net")
+    $.notice("【京东】", "抓取wskey成功！", jd_wskey, "http://boxjs.net")
   }
 }
-
 
 function Env() {
   LN = typeof $loon != "undefined"
