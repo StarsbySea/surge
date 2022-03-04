@@ -47,7 +47,7 @@ function set() {
     console.log(`key:${key}`)
     $.write(key, "key")
   }
-  if ($.getdata("pin") && $.getdata("key")) {
+  if ($.read("pin") && $.read("key")) {
     let wskey = `${$.read("pin")};${$.read("key")};`
     $.write("", "pin")
     console.log(`wskey:${wskey}`)
