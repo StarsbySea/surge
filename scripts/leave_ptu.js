@@ -40,7 +40,7 @@ if (isLeave == 'false') {
   const leaveType = $.read('leaveType') || '出校事假\/病假'
   const leaveReason = $.read('leaveReason') || '外出购买生活用品'
   const destination = $.read('destination') || '福建省\/莆田市\/城厢区\/双洋环球广场'
-  const studentInfo = $.read('studentInfo') || '阮开海,201912904732,新工科产业学院,2019,数据科学与大数据技术,数据197'
+  const studentInfo = $.read('studentInfo') || '阮开海，201912904732，新工科产业学院，2019，数据科学与大数据技术，数据197'
   const urgencyMobile = $.read('urgencyMobile') || '13860321207'
   const approverName = $.read('approverName') || '黄芦峰'
   const begin_date = $.read('begin_date') || preset_begin_date
