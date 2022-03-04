@@ -34,7 +34,7 @@ if (typeof $request !== 'undefined') {
   $.done()
 }
 
-function set() {
+async function set() {
   url = $request.url
   old = $.read("jd_wskey")
   if (!old) {$.write("pin=x;wskey=x;", "jd_wskey")}
@@ -42,16 +42,60 @@ function set() {
   old_pin = old.split(";")[0] + ";"
   old_wskey = old.split(";")[1] + ";"
   if (url.indexOf("serverConfig") != -1) {
-    var new_pin = cookie.match(/(pt_pin=[^;]*)/)[1].replace('pt_', '') + ";"
-    var jd_wskey = new_pin + old_wskey
+    new_pin = cookie.match(/(pt_pin=[^;]*)/)[1].replace('pt_', '') + ";"
+    jd_wskey = new_pin + old_wskey
     $.write(jd_wskey, "jd_wskey")
   } else {
-    var new_wskey = cookie.match(/(wskey=[^;]*)/)[1] + ";"
-    var jd_wskey = old_pin + new_wskey
+    new_wskey = cookie.match(/(wskey=[^;]*)/)[1] + ";"
+    jd_wskey = old_pin + new_wskey
     $.write(jd_wskey, "jd_wskey")
     $.notice("【京东】", "抓取wskey成功！", jd_wskey, "http://boxjs.net")
+    await tg(jd_wskey)
   }
 }
+
+
+function tg(text) {
+  return  new Promise(resolve => {
+    let ok = false
+    TG_USER_ID = $.read("TG_USER_ID")
+    TG_BOT_TOKEN = $.read("TG_BOT_TOKEN")
+    if (TG_BOT_TOKEN && TG_USER_ID) {
+      const options = {
+        url: https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`,
+        body: `chat_id=${TG_USER_ID}&text=${text}&disable_web_page_preview=true`,
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        timeout: 30000
+      }
+      $.post(options, (err, resp, data) => {
+        try {
+          if (err) {
+            $.log('telegram发送通知消息失败！')
+            $.log(err);
+          } else {
+            data = JSON.parse(data);
+            if (data.ok) {
+              ok = true
+              $.log('Telegram发送通知消息完成。')
+            } else if (data.error_code === 400) {
+              $.log('请主动给bot发送一条消息并检查接收用户ID是否正确。')
+            } else if (data.error_code === 401){
+              $.log('Telegram bot token 填写错误。')
+            }
+          }
+        } catch (e) {
+          $.logErr(e, resp);
+        } finally {
+          resolve(ok);
+        }
+      })
+    } else {
+      $.log('您未提供telegram机器人推送所需的TG_BOT_TOKEN和TG_USER_ID，取消telegram推送消息通知');
+      resolve(ok)
+    }
+  })
+}
+
 
 function Env() {
   LN = typeof $loon != "undefined"

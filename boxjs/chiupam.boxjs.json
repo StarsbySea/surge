@@ -275,6 +275,19 @@
           "val": "pin=xxxxxx;wskey=xxxxxx;",
           "type": "textarea",
           "desc": "复制它吧！"
+        },
+        {
+          "id": "TG_USER_ID",
+          "name": "TG USER ID",
+          "val": "",
+          "type": "text",
+          "desc": "Telegram的用户ID"
+        },{
+          "id": "TG_BOT_TOKEN",
+          "name": "TG BOT TOKEN",
+          "val": "",
+          "type": "text",
+          "desc": "Telegram的机器人API"
         }
       ],
       "author": "@chiupam",
