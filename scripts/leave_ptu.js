@@ -1,14 +1,14 @@
 /*
 
 [Script]
-# 今日校园假条(kmu.campusphere.net)
-今日校园假条 = type=http-response, pattern=^https:\/\/kmu\.campusphere\.net\/wec-counselor-leave-apps\/leave\/stu\/.*, requires-body=1, max-size=-1, script-path=https://raw.githubusercontent.com/chiupam/surge/main/scripts/leave_kmu.js
+# 今日校园假条(ptu.campusphere.net)
+今日校园假条 = type=http-response, pattern=^https:\/\/ptu\.campusphere\.net\/wec-counselor-leave-apps\/leave\/stu\/.*, requires-body=1, max-size=-1, script-path=https://raw.githubusercontent.com/StarsbySea/surge/main/scripts/leave_ptu.js
 
 [Mitm]
-hostname = %APPEND% kmu.campusphere.net
+hostname = %APPEND% ptu.campusphere.net
 
-git: https://github.com/chiupam/surge/blob/main/scripts/leave_kmm.js
-raw: https://raw.githubusercontent.com/chiupam/surge/main/scripts/leave_kmm.js
+git: https://github.com/StarsbySea/surge/blob/main/scripts/leave_ptu.js
+raw: https://raw.githubusercontent.com/StarsbySea/surge/main/scripts/leave_ptu.js
 
 */
 
