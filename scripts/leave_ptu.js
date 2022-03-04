@@ -176,7 +176,6 @@ if (isLeave == 'false') {
       "message": "SUCCESS",
       "datas": {
         "qr": qr,
-        "currentTime": new Date().Format("yyyy-MM-dd hh:mm:ss")
       },
       "code": "0"
     }
