@@ -1,5 +1,0 @@
-[Script]
-http-response ^https:\/\/ptu\.campusphere\.net\/wec-counselor-leave-apps\/leave\/stu\/.* script-path=https://raw.githubusercontent.com/StarsbySea/surge/main/scripts/leave_ptu.js, requires-body=true, timeout=20, tag=假条
-
-[Mitm]
-hostname = ptu.campusphere.net
