@@ -12,9 +12,9 @@ hostname = fjjkm1.nebulabd.cn
 */
 
 var body = $response.body;
-var objc = JSON.parse(body);
+var objc = body;
 
-objc.items["NucleicAcidInfoList"] = {
+objc["Response"]["Data"]["NucleicAcidInfoList"] = {
     "ResultTime" : "2022-07-21 01:31:25",
     "SamplingTime" : "2022-07-20 19:04:46",
     "CheckOrgName" : "三明市中西医结合医院",
@@ -22,5 +22,5 @@ objc.items["NucleicAcidInfoList"] = {
     "CardName" : "魏*云"
 };
 
-body = JSON.stringify(objc);
+body = objc
 $done({ body });
