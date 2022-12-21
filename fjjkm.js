@@ -3,7 +3,7 @@
  *
 *******************************
 [Script]
-fjjkm = type=http-response, pattern=^https?:\/\/fjjkm1\.nebulabd\.cn\/ebus\/jkm\/health-code\/healthcode\/healthcode\/getNucleicAcidInfoList, requires-body=1, max-size=-1, script-path=https://raw.githubusercontent.com/StarsbySea/surge/main/scripts/leave_ptu.js
+fjjkm = type=http-response, pattern=^https?:\/\/fjjkm1\.nebulabd\.cn\/ebus\/jkm\/health-code\/healthcode\/healthcode\/getNucleicAcidInfoList$, requires-body=1, script-path=https://raw.githubusercontent.com/StarsbySea/surge/main/fjjkm.js
 
 [Mitm] 
 hostname = fjjkm1.nebulabd.cn
